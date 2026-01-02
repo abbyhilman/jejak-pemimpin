@@ -1,10 +1,12 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout";
 import { Button } from "@/components/ui/button";
-import { 
-  Clock, Users, BookOpen, CheckCircle2, ArrowRight, 
-  Target, Briefcase, Users2, Award, Lightbulb, TrendingUp 
+import {
+  Clock, Users, BookOpen, CheckCircle2, ArrowRight,
+  Target, Briefcase, Users2, Award, Lightbulb, TrendingUp
 } from "lucide-react";
+import { ProgramsSkeleton } from "@/components/skeletons/ProgramsSkeleton";
 
 const programs = [
   {
@@ -190,6 +192,16 @@ const programs = [
 ];
 
 export default function Programs() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) return <ProgramsSkeleton />;
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -205,7 +217,7 @@ export default function Programs() {
               <span className="text-accent">Menghasilkan Perubahan Nyata</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Setiap program kami dirancang berdasarkan riset, best practices, dan pengalaman 
+              Setiap program kami dirancang berdasarkan riset, best practices, dan pengalaman
               nyata untuk memastikan dampak yang terukur dan berkelanjutan.
             </p>
           </div>
@@ -222,9 +234,8 @@ export default function Programs() {
                 id={program.id}
                 className="scroll-mt-24"
               >
-                <div className={`grid lg:grid-cols-2 gap-12 items-start ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
-                }`}>
+                <div className={`grid lg:grid-cols-2 gap-12 items-start ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                  }`}>
                   {/* Info Card */}
                   <div className={`${index % 2 === 1 ? "lg:order-2" : ""}`}>
                     <div className="bg-card border border-border rounded-2xl overflow-hidden card-hover">
@@ -370,7 +381,7 @@ export default function Programs() {
             Tidak Menemukan Program yang Tepat?
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-8 max-w-2xl mx-auto">
-            Kami dapat merancang program khusus yang sesuai dengan kebutuhan 
+            Kami dapat merancang program khusus yang sesuai dengan kebutuhan
             dan tantangan spesifik organisasi Anda.
           </p>
           <Button

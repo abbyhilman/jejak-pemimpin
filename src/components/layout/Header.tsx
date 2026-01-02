@@ -31,6 +31,11 @@ export function Header() {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
+  // Detect if we're on the homepage
+  const isHomePage = location.pathname === "/";
+  // Use light text only on homepage when not scrolled
+  const shouldUseLightText = isHomePage && !isScrolled;
+
   return (
     <header
       className={cn(
@@ -50,7 +55,7 @@ export function Header() {
             <span
               className={cn(
                 "transition-colors duration-300",
-                isScrolled ? "text-foreground" : "text-primary-foreground"
+                shouldUseLightText ? "text-primary-foreground" : "text-foreground"
               )}
             >
               Jejak
@@ -68,9 +73,9 @@ export function Header() {
                   "px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200",
                   location.pathname === link.href
                     ? "text-accent"
-                    : isScrolled
-                    ? "text-foreground/80 hover:text-foreground hover:bg-muted"
-                    : "text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10"
+                    : shouldUseLightText
+                      ? "text-primary-foreground/80 hover:text-primary-foreground hover:bg-white/10"
+                      : "text-foreground/80 hover:text-foreground hover:bg-muted"
                 )}
               >
                 {link.label}
@@ -93,9 +98,9 @@ export function Header() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className={cn(
               "md:hidden p-2 rounded-lg transition-colors",
-              isScrolled
-                ? "text-foreground hover:bg-muted"
-                : "text-primary-foreground hover:bg-white/10"
+              shouldUseLightText
+                ? "text-primary-foreground hover:bg-white/10"
+                : "text-foreground hover:bg-muted"
             )}
             aria-label="Toggle menu"
           >

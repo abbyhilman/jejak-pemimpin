@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { GallerySkeleton } from "@/components/skeletons/GallerySkeleton";
 
 const categories = [
   { id: "all", label: "Semua" },
@@ -99,26 +100,35 @@ const galleryItems = [
 ];
 
 export default function Gallery() {
+  const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredItems = activeCategory === "all"
     ? galleryItems
     : galleryItems.filter(item => item.category === activeCategory);
 
-  const currentIndex = selectedImage !== null 
-    ? filteredItems.findIndex(item => item.id === selectedImage) 
+  const currentIndex = selectedImage !== null
+    ? filteredItems.findIndex(item => item.id === selectedImage)
     : -1;
 
   const navigateImage = (direction: "prev" | "next") => {
     if (currentIndex === -1) return;
-    const newIndex = direction === "prev" 
+    const newIndex = direction === "prev"
       ? (currentIndex - 1 + filteredItems.length) % filteredItems.length
       : (currentIndex + 1) % filteredItems.length;
     setSelectedImage(filteredItems[newIndex].id);
   };
 
   const selectedItem = galleryItems.find(item => item.id === selectedImage);
+
+  if (isLoading) return <GallerySkeleton />;
 
   return (
     <Layout>
@@ -135,7 +145,7 @@ export default function Gallery() {
               <span className="text-accent">Perjalanan Bersama</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Lihat dokumentasi kegiatan pelatihan, workshop, dan event 
+              Lihat dokumentasi kegiatan pelatihan, workshop, dan event
               yang telah kami selenggarakan bersama ribuan peserta.
             </p>
           </div>
@@ -192,7 +202,7 @@ export default function Gallery() {
 
       {/* Lightbox */}
       {selectedImage !== null && selectedItem && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
           onClick={() => setSelectedImage(null)}
         >
@@ -219,7 +229,7 @@ export default function Gallery() {
           </button>
 
           {/* Image */}
-          <div 
+          <div
             className="max-w-5xl max-h-[85vh] mx-4"
             onClick={(e) => e.stopPropagation()}
           >

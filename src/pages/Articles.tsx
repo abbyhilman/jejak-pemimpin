@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Layout } from "@/components/layout";
 import { Calendar, Clock, ArrowRight, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { ArticlesSkeleton } from "@/components/skeletons/ArticlesSkeleton";
 import { cn } from "@/lib/utils";
 
 const categories = [
@@ -138,18 +139,27 @@ const articles = [
 ];
 
 export default function Articles() {
+  const [isLoading, setIsLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredArticles = articles.filter(article => {
     const matchesCategory = activeCategory === "all" || article.category === activeCategory;
     const matchesSearch = article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
   const featuredArticles = articles.filter(a => a.featured);
   const regularArticles = filteredArticles.filter(a => !a.featured || activeCategory !== "all" || searchQuery);
+
+  if (isLoading) return <ArticlesSkeleton />;
 
   return (
     <Layout>
@@ -166,7 +176,7 @@ export default function Articles() {
               <span className="text-accent">Perjalanan Leadership Anda</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed mb-8">
-              Temukan artikel, tips, dan insight praktis untuk mengembangkan 
+              Temukan artikel, tips, dan insight praktis untuk mengembangkan
               kepemimpinan Anda dari para ahli dan praktisi.
             </p>
 

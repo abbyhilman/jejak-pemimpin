@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { 
-  ArrowLeft, ArrowRight, Building2, Users, Target, 
-  Clock, FileText, CheckCircle2, Download, Mail, Share2 
+import {
+  ArrowLeft, ArrowRight, Building2, Users, Target,
+  Clock, FileText, CheckCircle2, Download, Mail, Share2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const programs = [
   { id: "leadership-fundamentals", name: "Leadership Fundamentals" },
@@ -47,11 +49,12 @@ const steps = [
 export default function GenerateProposal() {
   const [searchParams] = useSearchParams();
   const preselectedProgram = searchParams.get("program") || "";
-  
+
   const [currentStep, setCurrentStep] = useState(1);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isGenerated, setIsGenerated] = useState(false);
-  
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const [formData, setFormData] = useState({
     companyName: "",
     contactName: "",
@@ -94,6 +97,51 @@ export default function GenerateProposal() {
     setIsGenerated(true);
   };
 
+  const handleDownloadPDF = async () => {
+    const element = document.getElementById('proposal-content');
+    if (!element) return;
+
+    setIsDownloading(true);
+
+    try {
+      const canvas = await html2canvas(element, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true, // Handle cross-origin images
+        logging: false,
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+
+      // Handle multi-page content if necessary (though current design fits one page usually)
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+
+      pdf.save(`Proposal_Pelatihan_${formData.companyName.replace(/\s+/g, '_')}.pdf`);
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   const selectedProgram = programs.find(p => p.id === formData.program);
   const selectedLevel = participantLevels.find(l => l.id === formData.participantLevel);
   const selectedDuration = durations.find(d => d.id === formData.duration);
@@ -104,8 +152,8 @@ export default function GenerateProposal() {
       <section className="pt-32 pb-12 bg-gradient-subtle">
         <div className="section-container">
           <div className="max-w-3xl mx-auto text-center">
-            <Link 
-              to="/programs" 
+            <Link
+              to="/programs"
               className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-6"
             >
               <ArrowLeft size={18} />
@@ -118,7 +166,7 @@ export default function GenerateProposal() {
               Generate Proposal Pelatihan
             </h1>
             <p className="text-lg text-muted-foreground">
-              Buat proposal pelatihan yang disesuaikan dengan kebutuhan organisasi Anda 
+              Buat proposal pelatihan yang disesuaikan dengan kebutuhan organisasi Anda
               dalam hitungan menit.
             </p>
           </div>
@@ -155,7 +203,7 @@ export default function GenerateProposal() {
                     </span>
                   </div>
                   {index < steps.length - 1 && (
-                    <div 
+                    <div
                       className={cn(
                         "w-12 sm:w-24 h-1 mx-2 rounded-full transition-all",
                         currentStep > step.id ? "bg-accent" : "bg-muted"
@@ -372,7 +420,7 @@ export default function GenerateProposal() {
                         <Checkbox
                           id="consent"
                           checked={formData.consent}
-                          onCheckedChange={(checked) => 
+                          onCheckedChange={(checked) =>
                             setFormData(prev => ({ ...prev, consent: checked as boolean }))
                           }
                         />
@@ -380,7 +428,7 @@ export default function GenerateProposal() {
                           htmlFor="consent"
                           className="text-sm text-muted-foreground leading-relaxed cursor-pointer"
                         >
-                          Saya bersedia dihubungi oleh tim Jejak Pemimpin untuk 
+                          Saya bersedia dihubungi oleh tim Jejak Pemimpin untuk
                           mendiskusikan kebutuhan pelatihan lebih lanjut. (Opsional)
                         </label>
                       </div>
@@ -463,15 +511,15 @@ export default function GenerateProposal() {
                     <ArrowLeft className="mr-2" size={18} />
                     Sebelumnya
                   </Button>
-                  
+
                   {currentStep < 4 ? (
                     <Button type="button" onClick={handleNext}>
                       Selanjutnya
                       <ArrowRight className="ml-2" size={18} />
                     </Button>
                   ) : (
-                    <Button 
-                      type="button" 
+                    <Button
+                      type="button"
                       onClick={handleGenerate}
                       disabled={isGenerating}
                       className="bg-accent text-accent-foreground hover:bg-accent/90"
@@ -502,7 +550,7 @@ export default function GenerateProposal() {
                 </div>
 
                 {/* Proposal Preview */}
-                <div className="bg-card border border-border rounded-2xl p-8">
+                <div id="proposal-content" className="bg-card border border-border rounded-2xl p-8">
                   <div className="border-b border-border pb-6 mb-6">
                     <div className="flex items-center justify-between mb-4">
                       <div>
@@ -522,8 +570,8 @@ export default function GenerateProposal() {
                     <div>
                       <h4 className="font-semibold text-foreground mb-3">Ringkasan Program</h4>
                       <p className="text-muted-foreground text-sm leading-relaxed">
-                        Program {selectedProgram?.name} dirancang khusus untuk {formData.participantCount} peserta 
-                        di level {selectedLevel?.label} dengan fokus pada pengembangan kompetensi kepemimpinan 
+                        Program {selectedProgram?.name} dirancang khusus untuk {formData.participantCount} peserta
+                        di level {selectedLevel?.label} dengan fokus pada pengembangan kompetensi kepemimpinan
                         yang relevan dengan kebutuhan {formData.companyName}.
                       </p>
                     </div>
@@ -579,9 +627,20 @@ export default function GenerateProposal() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                    <Download className="mr-2" size={18} />
-                    Download PDF
+                  <Button
+                    size="lg"
+                    className="bg-accent text-accent-foreground hover:bg-accent/90"
+                    onClick={handleDownloadPDF}
+                    disabled={isDownloading}
+                  >
+                    {isDownloading ? (
+                      "Downloading..."
+                    ) : (
+                      <>
+                        <Download className="mr-2" size={18} />
+                        Download PDF
+                      </>
+                    )}
                   </Button>
                   <Button size="lg" variant="outline">
                     <Mail className="mr-2" size={18} />

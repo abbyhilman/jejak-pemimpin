@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { 
-  Mail, Phone, MapPin, Clock, Send, 
-  CheckCircle2, Linkedin, Instagram, Youtube 
+import {
+  Mail, Phone, MapPin, Clock, Send,
+  CheckCircle2, Linkedin, Instagram, Youtube
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -96,7 +96,7 @@ export default function Contact() {
               <span className="text-accent">Kebutuhan Anda</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Tim kami siap membantu Anda menemukan program pelatihan yang tepat 
+              Tim kami siap membantu Anda menemukan program pelatihan yang tepat
               untuk mengembangkan kepemimpinan di organisasi Anda.
             </p>
           </div>
@@ -114,7 +114,7 @@ export default function Contact() {
                   Informasi Kontak
                 </h2>
                 <p className="text-muted-foreground mb-8">
-                  Hubungi kami melalui channel yang paling nyaman untuk Anda. 
+                  Hubungi kami melalui channel yang paling nyaman untuk Anda.
                   Kami akan merespons dalam waktu 1x24 jam.
                 </p>
               </div>
@@ -299,8 +299,8 @@ export default function Contact() {
               Konsultasi Gratis
             </h2>
             <p className="text-primary-foreground/80 text-lg mb-8">
-              Dapatkan konsultasi gratis untuk memahami kebutuhan pengembangan 
-              kepemimpinan di organisasi Anda. Tidak ada komitmen, hanya diskusi 
+              Dapatkan konsultasi gratis untuk memahami kebutuhan pengembangan
+              kepemimpinan di organisasi Anda. Tidak ada komitmen, hanya diskusi
               yang bermanfaat.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -318,9 +318,9 @@ export default function Contact() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="border-white/30 text-primary-foreground hover:bg-white/10"
+                className="border-accent/50 bg-accent/10 text-accent hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all"
               >
-                <a 
+                <a
                   href="https://wa.me/6281234567890?text=Halo,%20saya%20tertarik%20untuk%20konsultasi%20program%20pelatihan."
                   target="_blank"
                   rel="noopener noreferrer"

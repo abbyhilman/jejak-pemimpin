@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout";
 import { Target, Eye, Heart, Users, Award, Briefcase, GraduationCap, TrendingUp } from "lucide-react";
+import { AboutSkeleton } from "@/components/skeletons/AboutSkeleton";
 
 const timeline = [
   {
@@ -85,6 +87,16 @@ const team = [
 ];
 
 export default function About() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 800);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) return <AboutSkeleton />;
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -99,7 +111,7 @@ export default function About() {
               <span className="text-accent">Menciptakan Dampak</span>
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Sejak 2014, kami telah mendedikasikan diri untuk mengembangkan pemimpin-pemimpin 
+              Sejak 2014, kami telah mendedikasikan diri untuk mengembangkan pemimpin-pemimpin
               Indonesia yang tidak hanya kompeten, tetapi juga berkarakter dan berdampak positif.
             </p>
           </div>
@@ -119,15 +131,15 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-muted-foreground leading-relaxed">
                 <p>
-                  Jejak Pemimpin lahir dari keyakinan bahwa Indonesia membutuhkan lebih banyak 
+                  Jejak Pemimpin lahir dari keyakinan bahwa Indonesia membutuhkan lebih banyak
                   pemimpin yang tidak hanya cerdas, tetapi juga memiliki integritas dan empati.
                 </p>
                 <p>
-                  Kami percaya bahwa kepemimpinan bukan tentang posisi atau jabatan, melainkan 
+                  Kami percaya bahwa kepemimpinan bukan tentang posisi atau jabatan, melainkan
                   tentang pengaruh positif yang kita berikan kepada orang-orang di sekitar kita.
                 </p>
                 <p>
-                  Dengan pendekatan yang human-centered dan metodologi yang teruji, kami telah 
+                  Dengan pendekatan yang human-centered dan metodologi yang teruji, kami telah
                   membantu ribuan profesional menemukan dan mengembangkan potensi kepemimpinan mereka.
                 </p>
               </div>
@@ -168,7 +180,7 @@ export default function About() {
               </div>
               <h3 className="text-2xl font-bold mb-4">Visi Kami</h3>
               <p className="text-primary-foreground/80 text-lg leading-relaxed">
-                Menjadi partner terpercaya dalam pengembangan kepemimpinan di Indonesia, 
+                Menjadi partner terpercaya dalam pengembangan kepemimpinan di Indonesia,
                 menciptakan generasi pemimpin yang transformatif dan berdampak global.
               </p>
             </div>
@@ -220,9 +232,8 @@ export default function About() {
               {timeline.map((item, index) => (
                 <div
                   key={item.year}
-                  className={`relative flex items-center gap-8 ${
-                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
+                  className={`relative flex items-center gap-8 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    }`}
                 >
                   {/* Dot */}
                   <div className="absolute left-4 md:left-1/2 w-4 h-4 rounded-full bg-accent border-4 border-background md:-translate-x-2 z-10" />
@@ -289,7 +300,7 @@ export default function About() {
               Para Ahli di Balik Program Kami
             </h2>
             <p className="text-muted-foreground text-lg">
-              Tim fasilitator dan coach kami adalah para profesional berpengalaman yang 
+              Tim fasilitator dan coach kami adalah para profesional berpengalaman yang
               telah membuktikan kompetensi mereka di dunia nyata.
             </p>
           </div>
