@@ -149,23 +149,23 @@ export default function GenerateProposal() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-12 bg-gradient-subtle">
-        <div className="section-container">
+      <section className="pt-24 pb-8 md:pt-32 md:pb-12 bg-gradient-subtle">
+        <div className="section-container px-4">
           <div className="max-w-3xl mx-auto text-center">
             <Link
               to="/programs"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-6"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors mb-4 md:mb-6 text-sm"
             >
-              <ArrowLeft size={18} />
+              <ArrowLeft size={16} />
               Kembali ke Program
             </Link>
-            <span className="text-accent font-semibold text-sm uppercase tracking-wider mb-4 block">
+            <span className="text-accent font-semibold text-xs md:text-sm uppercase tracking-wider mb-2 md:mb-4 block">
               Proposal Generator
             </span>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground mb-3 md:mb-4 leading-tight">
               Generate Proposal Pelatihan
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-base md:text-lg text-muted-foreground px-2">
               Buat proposal pelatihan yang disesuaikan dengan kebutuhan organisasi Anda
               dalam hitungan menit.
             </p>
@@ -174,29 +174,29 @@ export default function GenerateProposal() {
       </section>
 
       {/* Progress Steps */}
-      <section className="py-8 border-b border-border">
-        <div className="section-container">
+      <section className="py-6 md:py-8 border-b border-border overflow-x-auto">
+        <div className="section-container min-w-[320px]">
           <div className="max-w-3xl mx-auto">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between px-2">
               {steps.map((step, index) => (
                 <div key={step.id} className="flex items-center">
-                  <div className="flex flex-col items-center">
+                  <div className="flex flex-col items-center min-w-[60px]">
                     <div
                       className={cn(
-                        "w-12 h-12 rounded-full flex items-center justify-center transition-all",
+                        "w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all shrink-0",
                         currentStep >= step.id
                           ? "bg-accent text-accent-foreground"
                           : "bg-muted text-muted-foreground"
                       )}
                     >
                       {isGenerated && step.id === 4 ? (
-                        <CheckCircle2 size={24} />
+                        <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6" />
                       ) : (
-                        <step.icon size={20} />
+                        <step.icon className="w-4 h-4 md:w-5 md:h-5" />
                       )}
                     </div>
                     <span className={cn(
-                      "text-xs mt-2 font-medium hidden sm:block",
+                      "text-[10px] md:text-xs mt-2 font-medium text-center leading-tight max-w-[80px]",
                       currentStep >= step.id ? "text-foreground" : "text-muted-foreground"
                     )}>
                       {step.title}
@@ -205,7 +205,7 @@ export default function GenerateProposal() {
                   {index < steps.length - 1 && (
                     <div
                       className={cn(
-                        "w-12 sm:w-24 h-1 mx-2 rounded-full transition-all",
+                        "flex-1 h-0.5 md:h-1 mx-2 rounded-full transition-all min-w-[20px]",
                         currentStep > step.id ? "bg-accent" : "bg-muted"
                       )}
                     />
@@ -218,11 +218,11 @@ export default function GenerateProposal() {
       </section>
 
       {/* Form Section */}
-      <section className="section-padding">
+      <section className="section-padding py-8 md:py-16">
         <div className="section-container">
           <div className="max-w-2xl mx-auto">
             {!isGenerated ? (
-              <div className="bg-card border border-border rounded-2xl p-8">
+              <div className="bg-card border border-border rounded-xl md:rounded-2xl p-4 md:p-8 shadow-sm">
                 {/* Step 1: Company Info */}
                 {currentStep === 1 && (
                   <div className="space-y-6">
@@ -258,7 +258,7 @@ export default function GenerateProposal() {
                           required
                         />
                       </div>
-                      <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="contactEmail">Email *</Label>
                           <Input
@@ -317,7 +317,7 @@ export default function GenerateProposal() {
                           ))}
                         </select>
                       </div>
-                      <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="participantCount">Jumlah Peserta *</Label>
                           <Input
@@ -451,7 +451,7 @@ export default function GenerateProposal() {
                     <div className="space-y-6">
                       <div className="bg-secondary/50 rounded-xl p-6 space-y-4">
                         <h3 className="font-semibold text-foreground">Informasi Perusahaan</h3>
-                        <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                           <div>
                             <span className="text-muted-foreground">Perusahaan:</span>
                             <p className="font-medium text-foreground">{formData.companyName || "-"}</p>
@@ -473,7 +473,7 @@ export default function GenerateProposal() {
 
                       <div className="bg-secondary/50 rounded-xl p-6 space-y-4">
                         <h3 className="font-semibold text-foreground">Detail Pelatihan</h3>
-                        <div className="grid sm:grid-cols-2 gap-4 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                           <div>
                             <span className="text-muted-foreground">Program:</span>
                             <p className="font-medium text-foreground">{selectedProgram?.name || "-"}</p>
@@ -501,7 +501,7 @@ export default function GenerateProposal() {
                 )}
 
                 {/* Navigation Buttons */}
-                <div className="flex justify-between mt-8 pt-6 border-t border-border">
+                <div className="flex justify-between mt-6 md:mt-8 pt-6 border-t border-border gap-3">
                   <Button
                     type="button"
                     variant="outline"
@@ -538,8 +538,8 @@ export default function GenerateProposal() {
               </div>
             ) : (
               /* Generated Proposal */
-              <div className="space-y-8">
-                <div className="bg-accent/10 border border-accent/20 rounded-2xl p-8 text-center">
+              <div className="space-y-6 md:space-y-8">
+                <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 md:p-8 text-center">
                   <CheckCircle2 className="w-16 h-16 text-accent mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-foreground mb-2">
                     Proposal Berhasil Dibuat!
@@ -550,16 +550,16 @@ export default function GenerateProposal() {
                 </div>
 
                 {/* Proposal Preview */}
-                <div id="proposal-content" className="bg-card border border-border rounded-2xl p-8">
+                <div id="proposal-content" className="bg-card border border-border rounded-xl md:rounded-2xl p-4 md:p-8 shadow-sm">
                   <div className="border-b border-border pb-6 mb-6">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                       <div>
                         <h3 className="text-sm text-muted-foreground">PROPOSAL PELATIHAN</h3>
                         <h2 className="text-2xl font-bold text-foreground">
                           {selectedProgram?.name}
                         </h2>
                       </div>
-                      <div className="text-right">
+                      <div className="text-left md:text-right">
                         <p className="text-sm text-muted-foreground">Untuk:</p>
                         <p className="font-semibold text-foreground">{formData.companyName}</p>
                       </div>
@@ -605,7 +605,7 @@ export default function GenerateProposal() {
                       </ul>
                     </div>
 
-                    <div className="grid sm:grid-cols-3 gap-4 pt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4">
                       <div className="bg-secondary/50 rounded-lg p-4 text-center">
                         <Users className="text-accent mx-auto mb-2" size={24} />
                         <p className="text-sm text-muted-foreground">Peserta</p>
@@ -626,7 +626,7 @@ export default function GenerateProposal() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-wrap gap-4 justify-center">
+                <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center">
                   <Button
                     size="lg"
                     className="bg-accent text-accent-foreground hover:bg-accent/90"

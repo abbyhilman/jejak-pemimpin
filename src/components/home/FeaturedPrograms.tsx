@@ -50,20 +50,20 @@ export function FeaturedPrograms() {
     <section className="section-padding">
       <div className="section-container">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
-          <div className="max-w-2xl">
-            <span className="text-accent font-semibold text-sm uppercase tracking-wider mb-4 block">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6 mb-8 md:mb-12">
+          <div className="max-w-2xl text-center md:text-left">
+            <span className="text-accent font-semibold text-xs md:text-sm uppercase tracking-wider mb-2 md:mb-4 block">
               Program Unggulan
             </span>
-            <h2 className="text-foreground mb-4">
+            <h2 className="text-foreground mb-3 md:mb-4 text-2xl md:text-4xl font-bold">
               Transformasi Dimulai dari Sini
             </h2>
-            <p className="text-muted-foreground text-lg">
-              Program pelatihan yang dirancang untuk menghasilkan perubahan nyata 
+            <p className="text-muted-foreground text-base md:text-lg">
+              Program pelatihan yang dirancang untuk menghasilkan perubahan nyata
               dalam cara Anda memimpin.
             </p>
           </div>
-          <Button asChild variant="outline" className="group self-start md:self-auto">
+          <Button asChild variant="outline" className="group w-full md:w-auto mt-4 md:mt-0">
             <Link to="/programs">
               Lihat Semua Program
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
@@ -76,16 +76,16 @@ export function FeaturedPrograms() {
           {programs.map((program, index) => (
             <div
               key={program.id}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card card-hover"
+              className="group relative overflow-hidden rounded-xl md:rounded-2xl border border-border bg-card card-hover flex flex-col"
             >
               {/* Gradient Banner */}
               <div className={`h-2 bg-gradient-to-r ${program.color}`} />
-              
-              <div className="p-8">
-                <h3 className="text-2xl font-semibold text-foreground mb-3 group-hover:text-accent transition-colors">
+
+              <div className="p-5 md:p-8 flex flex-col flex-grow">
+                <h3 className="text-xl md:text-2xl font-semibold text-foreground mb-2 md:mb-3 group-hover:text-accent transition-colors">
                   {program.title}
                 </h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
+                <p className="text-sm md:text-base text-muted-foreground mb-4 md:mb-6 leading-relaxed flex-grow">
                   {program.description}
                 </p>
 
@@ -106,11 +106,11 @@ export function FeaturedPrograms() {
                 </div>
 
                 {/* CTA */}
-                <div className="flex gap-3">
-                  <Button asChild className="flex-1">
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button asChild className="flex-1 w-full">
                     <Link to={`/programs#${program.id}`}>Detail Program</Link>
                   </Button>
-                  <Button asChild variant="outline">
+                  <Button asChild variant="outline" className="w-full sm:w-auto">
                     <Link to={`/generate-proposal?program=${program.id}`}>
                       Generate Proposal
                     </Link>

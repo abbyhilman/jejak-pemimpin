@@ -205,18 +205,18 @@ export default function Programs() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-subtle">
-        <div className="section-container">
+      <section className="pt-24 pb-12 md:pt-32 md:pb-20 bg-gradient-subtle">
+        <div className="section-container px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <span className="text-accent font-semibold text-sm uppercase tracking-wider mb-4 block">
+            <span className="text-accent font-semibold text-xs md:text-sm uppercase tracking-wider mb-2 md:mb-4 block">
               Program Kami
             </span>
-            <h1 className="text-foreground mb-6">
+            <h1 className="text-foreground mb-4 md:mb-6 text-2xl md:text-4xl lg:text-5xl font-bold">
               Program Pelatihan yang
               <br />
               <span className="text-accent">Menghasilkan Perubahan Nyata</span>
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-base md:text-xl text-muted-foreground leading-relaxed px-2">
               Setiap program kami dirancang berdasarkan riset, best practices, dan pengalaman
               nyata untuk memastikan dampak yang terukur dan berkelanjutan.
             </p>
@@ -234,7 +234,7 @@ export default function Programs() {
                 id={program.id}
                 className="scroll-mt-24"
               >
-                <div className={`grid lg:grid-cols-2 gap-12 items-start ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start ${index % 2 === 1 ? "lg:flex-row-reverse" : ""
                   }`}>
                   {/* Info Card */}
                   <div className={`${index % 2 === 1 ? "lg:order-2" : ""}`}>
@@ -261,7 +261,7 @@ export default function Programs() {
                         </p>
 
                         {/* Meta Info */}
-                        <div className="grid grid-cols-2 gap-4 mb-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6">
                           <div className="flex items-center gap-3 p-3 bg-secondary/50 rounded-lg">
                             <Clock size={18} className="text-accent" />
                             <div>
@@ -293,14 +293,14 @@ export default function Programs() {
                         </div>
 
                         {/* CTAs */}
-                        <div className="flex gap-3">
-                          <Button asChild className="flex-1 group">
+                        <div className="flex flex-col sm:flex-row gap-3">
+                          <Button asChild className="flex-1 group w-full">
                             <Link to="/contact">
                               Konsultasi Gratis
                               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={18} />
                             </Link>
                           </Button>
-                          <Button asChild variant="outline">
+                          <Button asChild variant="outline" className="w-full sm:w-auto">
                             <Link to={`/generate-proposal?program=${program.id}`}>
                               Generate Proposal
                             </Link>
@@ -350,7 +350,7 @@ export default function Programs() {
                         <BookOpen size={20} className="text-accent" />
                         Modul Pembelajaran
                       </h3>
-                      <div className="grid sm:grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {program.modules.map((module, i) => (
                           <div
                             key={i}
@@ -376,8 +376,8 @@ export default function Programs() {
 
       {/* CTA Section */}
       <section className="section-padding bg-primary text-primary-foreground">
-        <div className="section-container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+        <div className="section-container text-center px-4">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
             Tidak Menemukan Program yang Tepat?
           </h2>
           <p className="text-primary-foreground/80 text-lg mb-8 max-w-2xl mx-auto">

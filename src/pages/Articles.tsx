@@ -164,31 +164,31 @@ export default function Articles() {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-gradient-subtle">
-        <div className="section-container">
+      <section className="pt-24 pb-12 md:pt-32 md:pb-20 bg-gradient-subtle">
+        <div className="section-container px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <span className="text-accent font-semibold text-sm uppercase tracking-wider mb-4 block">
+            <span className="text-accent font-semibold text-xs md:text-sm uppercase tracking-wider mb-2 md:mb-4 block">
               Artikel & Insights
             </span>
-            <h1 className="text-foreground mb-6">
+            <h1 className="text-foreground mb-4 md:mb-6 text-3xl md:text-5xl font-bold">
               Wawasan untuk
               <br />
               <span className="text-accent">Perjalanan Leadership Anda</span>
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+            <p className="text-base md:text-xl text-muted-foreground leading-relaxed mb-6 md:mb-8 px-2">
               Temukan artikel, tips, dan insight praktis untuk mengembangkan
               kepemimpinan Anda dari para ahli dan praktisi.
             </p>
 
             {/* Search */}
-            <div className="relative max-w-md mx-auto">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
+            <div className="relative max-w-md mx-auto px-2 md:px-0">
+              <Search className="absolute left-6 md:left-4 top-1/2 -translate-y-1/2 text-muted-foreground" size={20} />
               <Input
                 type="text"
                 placeholder="Cari artikel..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 py-6 rounded-xl"
+                className="pl-12 py-6 rounded-xl text-base shadow-sm"
               />
             </div>
           </div>
@@ -197,10 +197,10 @@ export default function Articles() {
 
       {/* Featured Articles */}
       {activeCategory === "all" && !searchQuery && (
-        <section className="section-padding pb-0">
-          <div className="section-container">
-            <h2 className="text-2xl font-bold text-foreground mb-8">Artikel Pilihan</h2>
-            <div className="grid md:grid-cols-2 gap-8">
+        <section className="section-padding pb-0 py-8">
+          <div className="section-container px-4">
+            <h2 className="text-xl md:text-2xl font-bold text-foreground mb-4 md:mb-8">Artikel Pilihan</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
               {featuredArticles.map((article) => (
                 <Link
                   key={article.id}
@@ -249,16 +249,16 @@ export default function Articles() {
       )}
 
       {/* All Articles */}
-      <section className="section-padding">
-        <div className="section-container">
+      <section className="section-padding py-8 md:py-16">
+        <div className="section-container px-4">
           {/* Category Filter */}
-          <div className="flex flex-wrap gap-2 mb-12">
+          <div className="flex flex-wrap gap-2 mb-8 md:mb-12 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
                 className={cn(
-                  "px-5 py-2 rounded-full text-sm font-medium transition-all duration-300",
+                  "px-4 md:px-5 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 whitespace-nowrap",
                   activeCategory === category.id
                     ? "bg-accent text-accent-foreground shadow-lg"
                     : "bg-secondary text-muted-foreground hover:bg-secondary/80 hover:text-foreground"
@@ -271,7 +271,7 @@ export default function Articles() {
 
           {/* Articles Grid */}
           {regularArticles.length > 0 ? (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {regularArticles.map((article) => (
                 <Link
                   key={article.id}
